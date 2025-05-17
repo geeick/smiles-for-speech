@@ -96,7 +96,11 @@ function SelfProfile() {
           router.push("/login")
         }
       } else {
-        setError(data?.error || "Registration failed. Please try again.")
+        if (data?.error && data.error.toLowerCase().includes("email") && data.error.toLowerCase().includes("already")) {
+          setError("This email address is already in use. Please use a different email or log in.");
+        } else {
+          setError(data?.error || "Registration failed. Please try again.");
+        }
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.")
