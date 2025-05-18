@@ -66,7 +66,6 @@ export async function POST(req: Request) {
             create: {
               lovedOnesCount: profile.lovedOnesCount,
               diagnosisStatus: profile.diagnosisStatus,
-              attendsSchool: profile.attendsSchool,
               receivesServices: profile.receivesServices,
             },
           },

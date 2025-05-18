@@ -16,15 +16,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/admin/dashboard-header/page": [
+    "/profile/create/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/dashboard-header/page.js"
+      "static/chunks/app/profile/create/page.js"
     ],
-    "/api/admin/consented-counts/route": [
+    "/profile/create/caretaker/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/admin/consented-counts/route.js"
+      "static/chunks/app/profile/create/caretaker/page.js"
+    ],
+    "/profile/[userId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/profile/[userId]/page.js"
+    ],
+    "/api/profile/[userId]/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/profile/[userId]/route.js"
+    ],
+    "/profile/add-loved-one/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/profile/add-loved-one/page.js"
+    ],
+    "/api/loved-one/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/loved-one/route.js"
     ]
   }
 }

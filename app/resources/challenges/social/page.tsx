@@ -19,7 +19,7 @@ export default function SocialSkillsResources() {
 
           <div className="flex justify-center mb-8">
             <Image
-              src="/images/social-skills.jpg"
+              src="/social-skills.png"
               alt="Children interacting socially"
               width={400}
               height={300}

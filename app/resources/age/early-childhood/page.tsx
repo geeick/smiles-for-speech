@@ -158,10 +158,6 @@ export default function EarlyChildhoodResources() {
                   </p>
                 </div>
               </div>
-              <p className="mt-4">
-                In Ghana, availability of these specific programs may be limited, but the principles can be adapted by
-                local therapists and educators.
-              </p>
             </CardContent>
           </Card>
 

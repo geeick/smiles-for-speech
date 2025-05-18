@@ -28,12 +28,31 @@ export default function AddLovedOne() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // In a real app, you would save this data to a database
-    console.log(formData)
-    router.push("/profile/dashboard/caretaker")
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+
+  try {
+    const res = await fetch("/api/loved-one", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+
+    if (!res.ok) throw new Error("Failed to add loved one")
+
+    const data = await res.json()
+
+    if (data?.userId) {
+      router.push(`/profile/${data.userId}`)
+    } else {
+      throw new Error("Missing userId from server response")
+    }
+  } catch (err) {
+    console.error("Error submitting loved one:", err)
+    alert("Something went wrong while adding the loved one.")
   }
+}
+
 
   return (
     <div className="min-h-screen flex flex-col">

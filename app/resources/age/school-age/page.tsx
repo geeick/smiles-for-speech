@@ -17,7 +17,7 @@ export default function SchoolAgeResources() {
 
           <div className="flex justify-center mb-8">
             <Image
-              src="/images/school-age.jpg"
+              src="/5-10Children.png"
               alt="School-aged children learning"
               width={400}
               height={300}

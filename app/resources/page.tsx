@@ -86,56 +86,80 @@ const fetchLocalResources = async (latitude: number, longitude: number) => {
           title: "Early Childhood (0-5 years)",
           description: "Resources for identifying early signs and supporting young children",
           link: "/resources/age/early-childhood",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/0-5Children.png?height=80&width=80",
         },
         {
           title: "School Age (6-12 years)",
           description: "Support for school-aged children with autism",
           link: "/resources/age/school-age",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/5-10Children.png?height=80&width=80",
         },
         {
           title: "Adolescents (13-17 years)",
           description: "Resources for teenagers with autism",
           link: "/resources/age/adolescents",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/12-17Children.png?height=80&width=80",
         },
         {
           title: "Adults (18+ years)",
           description: "Support for adults on the autism spectrum",
           link: "/resources/age/adults",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/ResourcesForAdults.png?height=80&width=80",
         },
       ],
     },
     {
-      id: "challenges",
-      title: "Challenge-Specific Resources",
-      description: "Resources organized by specific challenges",
-      items: [
+  id: "challenges",
+  title: "Challenge-Specific Resources",
+  description: "Resources organized by specific challenges",
+  items: [
         {
           title: "Sensory Issues",
           description: "Understanding and managing sensory sensitivities",
           link: "/resources/challenges/sensory",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/sensory-issues.png?height=80&width=80",
         },
         {
           title: "Communication",
           description: "Tools and strategies for improving communication",
           link: "/resources/challenges/communication",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/communication.png?height=80&width=80",
         },
         {
           title: "Social Skills",
           description: "Resources for developing social understanding and skills",
           link: "/resources/challenges/social",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/social-skills.png?height=80&width=80",
         },
         {
           title: "Executive Function",
           description: "Support for organization, planning, and task management",
           link: "/resources/challenges/executive-function",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/executive-function.png?height=80&width=80",
+        },
+        {
+          title: "Stimming",
+          description: "Understanding self-stimulatory behavior and strategies to manage it",
+          link: "/resources/challenges/stimming",
+          image: "/stimming.png?height=80&width=80",
+        },
+        {
+          title: "Anxiety",
+          description: "Resources for recognizing and managing anxiety in autistic individuals",
+          link: "/resources/challenges/anxiety",
+          image: "/anxiety.png?height=80&width=80",
+        },
+        {
+          title: "Need for Routine",
+          description: "Support for establishing and maintaining helpful routines",
+          link: "/resources/challenges/routine",
+          image: "/routine.png?height=80&width=80",
+        },
+        {
+          title: "Burnout",
+          description: "Understanding autistic burnout and how to recover from it",
+          link: "/resources/challenges/burnout",
+          image: "/burnout.png?height=80&width=80",
         },
       ],
     },
@@ -148,25 +172,25 @@ const fetchLocalResources = async (latitude: number, longitude: number) => {
           title: "Newly Diagnosed",
           description: "Information for families with a recent autism diagnosis",
           link: "/resources/caregivers/newly-diagnosed",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/newly-diagnosed.png?height=80&width=80",
         },
         {
           title: "Educational Advocacy",
           description: "How to advocate for your child in educational settings",
           link: "/resources/caregivers/education",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/educational-advocacy.png?height=80&width=80",
         },
         {
           title: "Self-Care",
           description: "Resources for caregiver wellbeing",
           link: "/resources/caregivers/self-care",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/self-care.png?height=80&width=80",
         },
         {
           title: "Educational Materials",
           description: "Learn more about autism and how to support your loved ones",
           link: "/resources/caregivers/education-materials",
-          image: "/placeholder.svg?height=80&width=80",
+          image: "/educational-material.png?height=80&width=80",
         },
       ],
     },
@@ -204,7 +228,7 @@ const fetchLocalResources = async (latitude: number, longitude: number) => {
                     <Card key={index} className="card hover:border-primary hover:shadow-md transition-all">
                       <CardHeader className="flex flex-row items-center gap-4 bg-primary/10 rounded-t-[1rem]">
                         <Image
-                          src={item.image || "/placeholder.svg"}
+                          src={item.image || "/0-5Children.png"}
                           alt={item.title}
                           width={80}
                           height={80}

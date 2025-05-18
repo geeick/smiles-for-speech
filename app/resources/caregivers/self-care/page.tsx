@@ -19,7 +19,7 @@ export default function CaregiverSelfCare() {
 
           <div className="flex justify-center mb-8">
             <Image
-              src="/placeholder.svg?height=200&width=200"
+              src="/self-care.png?height=200&width=200"
               alt="Self-care illustration"
               width={200}
               height={200}

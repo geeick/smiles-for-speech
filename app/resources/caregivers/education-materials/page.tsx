@@ -17,7 +17,7 @@ export default function EducationalMaterials() {
 
           <div className="flex justify-center mb-8">
             <Image
-              src="/placeholder.svg?height=200&width=200"
+              src="/educational-material.png?height=200&width=200"
               alt="Educational materials illustration"
               width={200}
               height={200}

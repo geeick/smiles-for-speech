@@ -19,7 +19,7 @@ export default function SensoryResources() {
 
           <div className="flex justify-center mb-8">
             <Image
-              src="/placeholder.svg?height=200&width=200"
+              src="/sensory-issues.png?height=200&width=200"
               alt="Sensory issues illustration"
               width={200}
               height={200}

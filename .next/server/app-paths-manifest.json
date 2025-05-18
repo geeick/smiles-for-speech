@@ -1,6 +1,10 @@
 {
+  "/api/loved-one/route": "app/api/loved-one/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/admin/consented-counts/route": "app/api/admin/consented-counts/route.js",
+  "/api/profile/[userId]/route": "app/api/profile/[userId]/route.js",
   "/page": "app/page.js",
-  "/admin/dashboard-header/page": "app/admin/dashboard-header/page.js"
+  "/profile/create/page": "app/profile/create/page.js",
+  "/profile/[userId]/page": "app/profile/[userId]/page.js",
+  "/profile/add-loved-one/page": "app/profile/add-loved-one/page.js",
+  "/profile/create/caretaker/page": "app/profile/create/caretaker/page.js"
 }

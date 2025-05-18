@@ -42,7 +42,7 @@ export default function Dashboard() {
     },
     routines: {
       name: "Need for Routines",
-      link: "/resources/challenges/routines",
+      link: "/resources/challenges/routine",
     },
     stimming: {
       name: "Stimming",
