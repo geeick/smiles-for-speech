@@ -17,7 +17,7 @@ import { signIn } from "next-auth/react"
 function SelfProfile() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const consent = searchParams.get("consent") === "yes"
+  const consent = searchParams?.get("consent") === "yes"
   
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -89,7 +89,12 @@ function SelfProfile() {
         })
 
         if (signInRes?.ok) {
-          router.push("/profile/dashboard")
+          // Redirect to unique profile page if userId is returned
+          if (data?.userId) {
+            router.push(`/profile/${data.userId}`)
+          } else {
+            router.push("/profile/dashboard")
+          }
           router.refresh()
         } else {
           setError("Sign-in failed. Please try logging in manually.")
@@ -257,9 +262,6 @@ function SelfProfile() {
                     </div>
                   ))}
                 </div>
-                {formData.challenges.length === 0 && (
-                  <p className="text-xs text-muted-foreground">Please select at least one challenge</p>
-                )}
               </div>
 
               <div className="space-y-2">

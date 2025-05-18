@@ -4,8 +4,18 @@ import { Header } from "@/components/header"
 
 export default function Home() {
   return (
+    <div className="relative h-screen overflow-hidden">
     <main className="min-h-screen flex flex-col">
       <Header />
+            {/* Moving background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-[-1] opacity-20">
+        <source src="/YellowBackgroundbyYuliyaKrautsevic.mp4" type="video/mp4" />
+      </video>
       <div className="flex-1 container max-w-6xl mx-auto px-4 py-12 md:py-24 flex flex-col items-center justify-center text-center">
         <div className="space-y-8 max-w-3xl">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-primary">Smiles for Speech</h1>
@@ -33,5 +43,7 @@ export default function Home() {
         </div>
       </div>
     </main>
+  </div>
+
   )
 }

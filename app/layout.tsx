@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Raleway } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { SessionWrapper } from "@/components/session-wrapper"  // ✅ NEW
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   title: "Smiles for Speech - Empowering Children with Special Needs",
   description:
     "A nonprofit organization founded in 2017 to empower children with special needs in underserved communities through access to therapy services and educational resources.",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
 }
 
 export default function RootLayout({
@@ -25,9 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${raleway.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+        <SessionWrapper> {/* ✅ Now it’s in a Client Component */}
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
+        </SessionWrapper>
       </body>
     </html>
   )

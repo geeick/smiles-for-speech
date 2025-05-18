@@ -41,7 +41,22 @@ export default function Login() {
       if (res?.error) {
         setError(res.error)
       } else {
-        router.push("/profile/dashboard")
+        // Fetch user profile to get userId
+        const profileRes = await fetch(`/api/profile/by-email?email=${encodeURIComponent(formData.email)}`)
+        if (!profileRes.ok) {
+          setError("Could not fetch user profile")
+          setIsLoading(false)
+          return
+        }
+        const profile = await profileRes.json()
+        // Support both { userId } and { id }
+        const userId = profile?.userId || profile?.id
+        if (!userId) {
+          setError("User profile not found")
+          setIsLoading(false)
+          return
+        }
+        router.push(`/profile/${userId}`)
         router.refresh()
       }
     } catch (error) {
@@ -58,15 +73,6 @@ export default function Login() {
       <main className="flex-1 container max-w-md mx-auto px-4 py-12 flex items-center justify-center">
         <Card className="w-full card">
           <CardHeader className="text-center bg-primary/10 rounded-t-[1rem]">
-            <div className="flex justify-center mb-4">
-              <Image
-                src="/placeholder.svg?height=100&width=100"
-                alt="Login"
-                width={100}
-                height={100}
-                className="rounded-full bg-white"
-              />
-            </div>
             <CardTitle className="text-2xl">Welcome Back</CardTitle>
             <CardDescription>Sign in to your Smiles for Speech account</CardDescription>
           </CardHeader>

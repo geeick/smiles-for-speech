@@ -10,19 +10,19 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 210 100% 50%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 199 89% 48%;
+    --primary: 45 100% 50%; /* Changed to high-contrast yellow */
+    --primary-foreground: 222.2 84% 4.9%; /* dark text for contrast */
+    --secondary: 47 100% 45%; /* yellow secondary */
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 100% 50%; /* Changed from purple to blue */
+    --accent: 48 100% 50%; /* yellow accent */
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --ring: 48 100% 50%; /* yellow ring */
     --radius: 1rem;
   }
 }
@@ -33,6 +33,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Montserrat', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; /* Less generic font */
   }
   h1,
   h2,
@@ -43,8 +44,9 @@
     font-weight: 700;
   }
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary/90 transition-colors;
+    @apply bg-primary text-[color:hsl(222.2,84%,4.9%)] hover:bg-primary/90 transition-colors;
     border-radius: var(--radius);
+    font-family: 'Montserrat', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   }
   .card {
     border-radius: var(--radius);
@@ -62,5 +64,5 @@ button:hover,
 }
 
 .hover\:bg-primary\/5:hover {
-  background-color: rgba(var(--primary), 0.05);
+  background-color: hsla(48, 100%, 50%, 0.05); /* yellow with opacity */
 }

@@ -8,12 +8,15 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Header } from "@/components/header"
 import { Progress } from "@/components/ui/progress"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function SelfAssessment() {
   const router = useRouter()
+  const { toast } = useToast()
   const [currentSection, setCurrentSection] = useState(0)
   const [progress, setProgress] = useState(0)
   const [answers, setAnswers] = useState<Record<string, number>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Define assessment sections based on DSM-5 domains
   const sections = [
@@ -179,13 +182,85 @@ export default function SelfAssessment() {
     setAnswers((prev) => ({ ...prev, [questionId]: value }))
   }
 
-  const handleNext = () => {
+  // Calculate category scores
+  const calculateCategoryScores = () => {
+    const categoryScores: Record<string, { score: number; maxScore: number }> = {}
+
+    sections.forEach((section) => {
+      const sectionId = section.title.toLowerCase().replace(/\s+/g, "_")
+      let sectionScore = 0
+      let sectionMaxScore = section.questions.length * 4 // Max score per question is 4
+
+      section.questions.forEach((question) => {
+        if (answers[question.id] !== undefined) {
+          sectionScore += answers[question.id]
+        }
+      })
+
+      categoryScores[sectionId] = {
+        score: sectionScore,
+        maxScore: sectionMaxScore
+      }
+    })
+
+    return categoryScores
+  }
+
+  const saveAssessmentToDB = async (
+    totalScore: number, 
+    maxPossibleScore: number, 
+    scorePercentage: number
+  ) => {
+    try {
+      setIsSubmitting(true)
+      
+      const categoryScores = calculateCategoryScores()
+      
+      const response = await fetch('/api/assessment/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          answers,
+          totalScore,
+          maxPossibleScore,
+          scorePercentage,
+          categories: categoryScores,
+          assessmentType: 'self'
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to save assessment results')
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error('Error saving assessment:', error)
+      toast({
+        title: "Error",
+        description: "Failed to save your assessment results. Your results will still be shown, but may not be saved to your profile.",
+        variant: "destructive",
+      })
+      return null
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleNext = async () => {
     // Check if all questions in current section are answered
     const currentQuestions = sections[currentSection].questions
     const allAnswered = currentQuestions.every((q) => answers[q.id] !== undefined)
 
     if (!allAnswered) {
-      alert("Please answer all questions before proceeding.")
+      toast({
+        title: "Please complete all questions",
+        description: "Please answer all questions before proceeding.",
+        variant: "destructive",
+      })
       return
     }
 
@@ -193,16 +268,16 @@ export default function SelfAssessment() {
       setCurrentSection((prev) => prev + 1)
       setProgress(Math.round(((currentSection + 1) / sections.length) * 100))
     } else {
-      // Calculate results and navigate to results page
+      // Calculate results
       const totalScore = Object.values(answers).reduce((sum, val) => sum + val, 0)
       const maxPossibleScore = sections.reduce((sum, section) => sum + section.questions.length * 4, 0)
       const scorePercentage = (totalScore / maxPossibleScore) * 100
 
-      // In a real app, you would save this data to a database
-      console.log("Assessment completed with score:", totalScore, "out of", maxPossibleScore)
-
+      // Save to database
+      const saveResult = await saveAssessmentToDB(totalScore, maxPossibleScore, scorePercentage)
+      
       // Navigate to results page with score
-      router.push(`/assessment/results?score=${scorePercentage.toFixed(0)}`)
+      router.push(`/assessment/results?score=${scorePercentage.toFixed(0)}${saveResult?.assessmentId ? `&id=${saveResult.assessmentId}` : ''}`)
     }
   }
 
@@ -269,8 +344,8 @@ export default function SelfAssessment() {
               <Button variant="outline" onClick={handlePrevious} disabled={currentSection === 0}>
                 Previous
               </Button>
-              <Button onClick={handleNext}>
-                {currentSection < sections.length - 1 ? "Next" : "Complete Assessment"}
+              <Button onClick={handleNext} disabled={isSubmitting}>
+                {currentSection < sections.length - 1 ? "Next" : isSubmitting ? "Saving..." : "Complete Assessment"}
               </Button>
             </CardFooter>
           </Card>

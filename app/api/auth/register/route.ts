@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     if (!credentials || !credentials.email || !credentials.password) {
       return NextResponse.json(
-        { message: "Email and password are required" },
+        { error: "Email and password are required" },
         { status: 400 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     if (existingUser) {
       return NextResponse.json(
-        { message: "User with this email already exists" },
+        { error: "User with this email already exists" },
         { status: 400 }
       );
     }
@@ -79,14 +79,14 @@ export async function POST(req: Request) {
       );
     } else {
       return NextResponse.json(
-        { message: "Invalid profile type" },
+        { error: "Invalid profile type" },
         { status: 400 }
       );
     }
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(
-      { message: "Error creating user" },
+      { error: "Error creating user" },
       { status: 500 }
     );
   }

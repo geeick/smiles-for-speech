@@ -15,12 +15,28 @@
   "headers": [],
   "dynamicRoutes": [
     {
+      "page": "/api/assesements/save/[id]",
+      "regex": "^/api/assesements/save/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/assesements/save/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/api/auth/[...nextauth]",
       "regex": "^/api/auth/(.+?)(?:/)?$",
       "routeKeys": {
         "nxtPnextauth": "nxtPnextauth"
       },
       "namedRegex": "^/api/auth/(?<nxtPnextauth>.+?)(?:/)?$"
+    },
+    {
+      "page": "/api/profile/[userId]",
+      "regex": "^/api/profile/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuserId": "nxtPuserId"
+      },
+      "namedRegex": "^/api/profile/(?<nxtPuserId>[^/]+?)(?:/)?$"
     },
     {
       "page": "/assessment/loved-one/[id]",
@@ -37,6 +53,30 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/profile/loved\\-one/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/profile/[userId]",
+      "regex": "^/profile/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuserId": "nxtPuserId"
+      },
+      "namedRegex": "^/profile/(?<nxtPuserId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/profile/[userId]/caretaker",
+      "regex": "^/profile/([^/]+?)/caretaker(?:/)?$",
+      "routeKeys": {
+        "nxtPuserId": "nxtPuserId"
+      },
+      "namedRegex": "^/profile/(?<nxtPuserId>[^/]+?)/caretaker(?:/)?$"
+    },
+    {
+      "page": "/profile/[userId]/edit",
+      "regex": "^/profile/([^/]+?)/edit(?:/)?$",
+      "routeKeys": {
+        "nxtPuserId": "nxtPuserId"
+      },
+      "namedRegex": "^/profile/(?<nxtPuserId>[^/]+?)/edit(?:/)?$"
     }
   ],
   "staticRoutes": [
@@ -93,18 +133,6 @@
       "regex": "^/profile/create/self(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/profile/create/self(?:/)?$"
-    },
-    {
-      "page": "/profile/dashboard",
-      "regex": "^/profile/dashboard(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/profile/dashboard(?:/)?$"
-    },
-    {
-      "page": "/profile/dashboard/caretaker",
-      "regex": "^/profile/dashboard/caretaker(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/profile/dashboard/caretaker(?:/)?$"
     },
     {
       "page": "/profile/login",
