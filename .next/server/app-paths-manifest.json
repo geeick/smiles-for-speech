@@ -1,7 +1,6 @@
 {
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/resources-nearby/route": "app/api/resources-nearby/route.js",
-  "/api/profile/[userId]/route": "app/api/profile/[userId]/route.js",
+  "/api/admin/statistics/route": "app/api/admin/statistics/route.js",
   "/page": "app/page.js",
-  "/resources/page": "app/resources/page.js"
+  "/admin/statistics-charts/page": "app/admin/statistics-charts/page.js"
 }
