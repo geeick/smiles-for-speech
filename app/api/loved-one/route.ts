@@ -1,58 +1,49 @@
-import { NextResponse } from "next/server"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { NextResponse } from "next/server"
 
-export async function POST(req: Request) {
+export async function GET(
+  req: Request,
+  context: { params: { userId: string } }
+) {
+  const { userId } = await context.params
+
+  if (!userId) {
+    return NextResponse.json({ error: "Missing userId" }, { status: 400 })
+  }
+
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-
     const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
-      include: { caretakerProfile: true },
-    })
-
-    if (!user?.caretakerProfile) {
-      return NextResponse.json({ error: "No caretaker profile found" }, { status: 400 })
-    }
-
-    const body = await req.json()
-    const {
-      name,
-      age,
-      sex,
-      diagnosisStatus,
-      concerns,
-      seekingSupport,
-    } = body
-
-    const lovedOne = await prisma.lovedOne.create({
-      data: {
-        name,
-        age: parseInt(age),
-        sex,
-        diagnosisStatus,
-        concerns,
-        seekingSupport: seekingSupport === "yes",
-        consent: true, // or false if default
-        caretaker: { connect: { id: user.caretakerProfile.id } },
-      },
-    })
-
-    // Optionally update lovedOnesCount
-    await prisma.caretakerProfile.update({
-      where: { id: user.caretakerProfile.id },
-      data: {
-        lovedOnesCount: {
-          increment: 1,
+      where: { id: userId },
+      include: {
+        selfProfile: true,
+        caretakerProfile: {
+          include: {
+            lovedOnes: true,
+          },
         },
       },
     })
 
-return NextResponse.json({ success: true, lovedOne, userId: user.id })
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 })
+    }
+
+    // Return profile based on type
+    if (user.caretakerProfile) {
+      return NextResponse.json({
+        type: "caretaker",
+        caretakerProfile: user.caretakerProfile,
+      })
+    } else if (user.selfProfile) {
+      return NextResponse.json({
+        type: "self",
+        selfProfile: user.selfProfile,
+      })
+    } else {
+      return NextResponse.json({ error: "No profile found" }, { status: 404 })
+    }
   } catch (err) {
-    console.error("API Error:", err)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    console.error("Profile fetch error:", err)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

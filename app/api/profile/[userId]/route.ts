@@ -5,7 +5,7 @@ export async function GET(
   req: Request,
   { params }: { params: { userId: string } }
 ) {
-  const { userId } = params;
+  const { userId } = await params;
 
   if (!userId) {
     return NextResponse.json({ error: "Missing userId" }, { status: 400 });
@@ -17,7 +17,11 @@ export async function GET(
       where: { id: userId },
       include: {
       selfProfile: true,
-      caretakerProfile: true,
+      caretakerProfile: {
+      include: {
+        lovedOnes: true,
+      },
+    },
     },
 
     });
@@ -48,10 +52,10 @@ if (user.selfProfile) {
     id: user.id,
     name: user.name,
     lovedOnesCount: user.caretakerProfile.lovedOnesCount,
-    diagnosisStatus: user.caretakerProfile.diagnosisStatus,
-    attendsSchool: user.caretakerProfile.attendsSchool,
-    receivesServices: user.caretakerProfile.receivesServices,
+    lovedOnes: user.caretakerProfile.lovedOnes,
+    location: user.caretakerProfile.location,
   }
+
 }
 
 return NextResponse.json({ type, ...profile }, { status: 200 });

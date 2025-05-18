@@ -120,26 +120,31 @@ export default function Dashboard() {
               <CardDescription>People you're caring for</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {(profileData.lovedOnes || []).map((person: any) => (
-                <div key={person.id} className="border rounded-lg p-4">
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                      <h3 className="font-medium">{person.name}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {person.age} years old • {person.diagnosisStatus}
-                      </p>
-                    </div>
-                    <div className="flex gap-2 w-full md:w-auto">
-                      <Link href={`/assessment/loved-one/${person.id}`}>
-                        <Button variant="outline" className="w-full">Start Assessment</Button>
-                      </Link>
-                      <Link href={`/profile/loved-one/${person.id}`}>
-                        <Button variant="outline" className="w-full">View Profile</Button>
-                      </Link>
+                  {profileData.lovedOnes?.length > 0 ? (
+                    profileData.lovedOnes.map((person: any) => (
+                    
+                  <div key={person.id} className="border rounded-lg p-4">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                      <div>
+                        <h3 className="font-medium">{person.name}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {person.age} years old • {person.diagnosisStatus}
+                        </p>
+                      </div>
+                      <div className="flex gap-2 w-full md:w-auto">
+                        <Link href={`/assessment/loved-one/${person.id}`}>
+                          <Button variant="outline" size="sm" className="rounded-xl">
+                            View Assessment
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-muted-foreground">You haven’t added any loved ones yet.</p>
+              )}
+
             </CardContent>
           </Card>
 
@@ -169,7 +174,7 @@ export default function Dashboard() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Number of Loved Ones</p>
-                      <p>{(profileData.lovedOnes || []).length}</p>
+                      <p>{profileData.caretakerProfile?.lovedOnes?.length || 0}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -274,7 +279,8 @@ export default function Dashboard() {
                   <CardTitle>Personal Information</CardTitle>
                   <CardDescription>Your basic profile information</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4 pt-6">
+                
+                <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Age</p>
@@ -285,19 +291,16 @@ export default function Dashboard() {
                       <p>{profileData.sex}</p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">Diagnosis</p>
-                      <p>{profileData.diagnosis}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Seeking Diagnosis</p>
-                      <p>{profileData.seekingDiagnosis}</p>
+                      <p className="text-sm font-medium text-muted-foreground">Number of Loved Ones</p>
+                      <p>{profileData.lovedOnes?.length || 0}</p> {/* ✅ Use flattened response */}
                     </div>
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Location</p>
-                      <p>{profileData.location}</p>
+                      <p>{profileData.location || "Not provided"}</p> {/* ✅ Optional safe fallback */}
                     </div>
                   </div>
                 </CardContent>
+
                 <CardFooter>
                   <Link href={`/profile/${userId}/edit`}>
                     <Button variant="outline" className="rounded-xl">
