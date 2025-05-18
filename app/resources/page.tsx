@@ -7,16 +7,20 @@ import { Header } from "@/components/header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import { useParams } from "next/navigation" // make sure it's imported
 
 const Resources = () => {
   const [location, setLocation] = useState<string | null>(null)
   const [showLocationPrompt, setShowLocationPrompt] = useState(false)
   const [localResources, setLocalResources] = useState<any[]>([])
+  const params = useParams()
+  const userId = params?.userId as string
+
 
 useEffect(() => {
   async function checkLocation() {
     try {
-      const res = await fetch("/api/profile/me");
+      const res = await fetch(`/api/profile/${userId}`);
       const data = await res.json();
 
       if (data?.location) {
@@ -42,25 +46,39 @@ useEffect(() => {
 }, []);
 
 
-  const handleGetLocation = () => {
+  const handleGetLocation = async () => {
   if (!navigator.geolocation) {
-    alert("Geolocation is not supported by your browser");
+    console.error("Geolocation not supported");
+    setShowLocationPrompt(true);
     return;
   }
 
   navigator.geolocation.getCurrentPosition(
-    (position) => {
+    async (position) => {
       const { latitude, longitude } = position.coords;
-      const loc = `Lat: ${latitude.toFixed(3)}, Lng: ${longitude.toFixed(3)}`;
-      setLocation(loc);
-      setShowLocationPrompt(false);
+      const locationText = `Lat: ${latitude.toFixed(4)}, Lng: ${longitude.toFixed(4)}`;
+      setLocation(locationText);
 
-      // Only call API — don’t update user profile
-      fetchLocalResources(latitude, longitude);
+      try {
+        const res = await fetch("/api/resources-nearby", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ latitude, longitude }),
+        });
+
+        const data = await res.json();
+        setLocalResources(data.resources || []);
+      } catch (err) {
+        console.error("Error fetching resources:", err);
+      }
     },
-    () => alert("Unable to retrieve your location")
+    (error) => {
+      console.error("Geolocation error:", error);
+      setShowLocationPrompt(true);
+    }
   );
 };
+
 
 const fetchLocalResources = async (latitude: number, longitude: number) => {
   if (isNaN(latitude) || isNaN(longitude)) return;

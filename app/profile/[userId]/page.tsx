@@ -279,7 +279,7 @@ export default function Dashboard() {
                   <CardTitle>Personal Information</CardTitle>
                   <CardDescription>Your basic profile information</CardDescription>
                 </CardHeader>
-                
+
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -289,10 +289,6 @@ export default function Dashboard() {
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Sex</p>
                       <p>{profileData.sex}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Number of Loved Ones</p>
-                      <p>{profileData.lovedOnes?.length || 0}</p> {/* ✅ Use flattened response */}
                     </div>
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Location</p>
