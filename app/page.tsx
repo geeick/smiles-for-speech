@@ -18,10 +18,9 @@ export default function Home() {
       </video>
       <div className="flex-1 container max-w-6xl mx-auto px-4 py-12 md:py-24 flex flex-col items-center justify-center text-center">
         <div className="space-y-8 max-w-3xl">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-primary">Smiles for Speech</h1>
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-primary"> Early Smiles </h1>
           <p className="text-xl md:text-2xl text-muted-foreground">
-            Empowering children with special needs in underserved communities through access to therapy services and
-            educational resources.
+            A screening and support platform created by Smiles for Speech to help families identify early signs of autism.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
             <Link href="/profile/create">
@@ -34,11 +33,6 @@ export default function Home() {
                 Learn More
               </Button>
             </Link>
-          </div>
-          <div className="pt-12">
-            <p className="text-muted-foreground">
-              Founded in 2017 to support early autism identification, education, and support in Ghana and beyond.
-            </p>
           </div>
         </div>
       </div>

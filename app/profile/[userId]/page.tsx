@@ -156,34 +156,6 @@ export default function Dashboard() {
               <TabsTrigger value="resources">Resources</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="profile" className="space-y-4 pt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Caretaker Information</CardTitle>
-                  <CardDescription>Your basic profile information</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Age</p>
-                      <p>{profileData.age}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Sex</p>
-                      <p>{profileData.sex}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Number of Loved Ones</p>
-                      <p>{profileData.caretakerProfile?.lovedOnes?.length || 0}</p>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline">Edit Profile</Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-
             <TabsContent value="assessments" className="space-y-4 pt-4">
               <Card>
                 <CardHeader>

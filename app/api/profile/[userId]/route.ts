@@ -3,9 +3,9 @@ import { db } from "@/lib/db";
 
 export async function GET(
   req: Request,
-  { params }: { params: { userId: string } }
+  context: { params: { userId: string } }
 ) {
-  const { userId } = await params;
+  const { userId } = (await context).params;
 
   if (!userId) {
     return NextResponse.json({ error: "Missing userId" }, { status: 400 });

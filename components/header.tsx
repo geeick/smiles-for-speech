@@ -12,7 +12,7 @@ export function Header() {
       <div className="container mx-auto flex flex-wrap items-center justify-between px-4 py-3">
         {/* Logo / Title */}
         <Link href="/" className="flex-shrink-0 text-primary text-lg font-bold truncate max-w-[60%] sm:max-w-none">
-          Smiles for Speech
+          Early Smiles
         </Link>
 
         {/* Nav */}

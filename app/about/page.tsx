@@ -21,84 +21,73 @@ export default function About() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p>
-                Smiles for Speech is a nonprofit organization founded in 2017 with a mission to empower children with
-                special needs in underserved communities, particularly in Ghana, through access to therapy services and
-                educational resources.
+               Since 2017, Smiles for Speech is a nonprofit organization dedicated to providing children with special needs in underserved 
+               communities access to essential therapy services and educational resources. 
               </p>
               <p>
-                We focus on early autism identification, education, and support through user-friendly web-based tools
-                that are accessible to families regardless of their location or resources.
+              Their mission is to empower these children by improving their communication skills and overall quality of life through speech therapy, occupational therapy, and other supportive services. 
+              Their aim is to bridge the gap in access to these vital resources, ensuring that every child has the opportunity to reach their full potential.
               </p>
-              <p>Our core goals include:</p>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Raising awareness about autism spectrum disorder</li>
-                <li>Enabling self and caregiver-based screenings</li>
-                <li>Collecting data for public health insight</li>
-                <li>Offering actionable resources personalized to user input</li>
-              </ul>
             </CardContent>
           </Card>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>Our Story</CardTitle>
-                <CardDescription>How we began</CardDescription>
+                <CardTitle>Problem statement: </CardTitle>
+                <CardDescription>What led to the development of this app</CardDescription>
               </CardHeader>
               <CardContent>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>
+                    <strong>Accessibility:</strong> Many areas in Ghana may have limited access to specialized healthcare professionals who can diagnose autism. An app can provide a more accessible tool for parents and caregivers to identify early signs.
+                  </li>
+                  <li>
+                    <strong>Early Intervention:</strong> Early detection of autism is crucial for effective intervention. An app can help parents and caregivers recognize signs earlier, leading to earlier support and better outcomes for children.
+                  </li>
+                  <li>
+                    <strong>Awareness and Education:</strong> An app can also serve as an educational resource, increasing awareness about autism and reducing stigma. It can provide valuable information on what autism is and how to support individuals with autism.
+                  </li>
+                  <li>
+                    <strong>Data Collection:</strong> An app can help collect data on autism prevalence and characteristics in Ghana, contributing to better understanding and planning for resources and support services.
+                  </li>
+                </ul>
                 <p>
-                  Smiles for Speech was founded by a group of speech therapists, educators, and parents who recognized
-                  the significant gap in services for children with special needs in Ghana and other underserved
-                  communities.
-                </p>
-                <p className="mt-4">
-                  After witnessing firsthand the challenges faced by families seeking support for children with autism,
-                  our founders committed to creating accessible resources that could reach even the most remote areas
-                  through digital technology.
-                </p>
-                <p className="mt-4">
-                  Since 2017, we have grown from a small local initiative to an organization with international reach,
-                  while maintaining our focus on culturally appropriate and accessible support.
+                  Overall, an app screening tool can play a significant role in improving autism awareness, diagnosis, and support in Ghana.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Our Approach</CardTitle>
+                <CardTitle>Solution statement</CardTitle>
                 <CardDescription>How we make a difference</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p>
-                  We believe in a compassionate, evidence-based approach that respects neurodiversity while providing
-                  practical support for challenges that affect quality of life.
+                  This innovative app is designed to empower parents by providing early identification and information regarding potential developmental concerns in their children, specifically focusing on early signs of Autism. By leveraging cutting-edge technology and evidence-based research, this tool will facilitate timely intervention and support, ultimately enhancing the developmental outcomes and quality of life for children and their families. This can include features like
                 </p>
-                <p>Our work is guided by these principles:</p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Accessibility: Making resources available regardless of location or economic status</li>
-                  <li>Cultural sensitivity: Adapting resources to local contexts and languages</li>
-                  <li>Family empowerment: Giving families tools to support their loved ones</li>
-                  <li>Community building: Creating networks of support</li>
-                  <li>Data-informed approaches: Using research to guide our work</li>
-                </ul>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>
+                  <strong>User Profiles:</strong> Allow users to create profiles for different individuals, especially if the app is used by parents or caregivers for multiple children.
+                </li>
+                <li>
+                  <strong>Results and Recommendations:</strong> Provide users with a summary of the results and suggest next steps, such as consulting a healthcare professional for a comprehensive evaluation.
+                </li>
+                <li>
+                  <strong>Resources and Support:</strong> Include educational resources about Autism and links to support groups or further reading.
+                </li>
+                <li>
+                  <strong>Privacy and Security:</strong> Implement robust data protection measures to ensure user privacy and comply with regulations like GDPR or HIPAA.
+                </li>
+              </ul>
               </CardContent>
             </Card>
           </div>
 
           <Card>
-            <CardHeader>
-              <CardTitle>Our Impact</CardTitle>
-              <CardDescription>The difference we're making</CardDescription>
-            </CardHeader>
+
             <CardContent className="space-y-4">
-              <p>Since our founding, Smiles for Speech has:</p>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Provided screening tools to over 5,000 families</li>
-                <li>Connected more than 1,200 children with professional services</li>
-                <li>Trained 300+ educators in autism-supportive teaching methods</li>
-                <li>Established support groups in 15 communities across Ghana</li>
-                <li>Developed resources in 4 languages to increase accessibility</li>
-              </ul>
               <div className="mt-6 text-center">
                 <Link href="/profile/create">
                   <Button size="lg">Join Our Community</Button>

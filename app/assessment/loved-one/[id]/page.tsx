@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Header } from "@/components/header"
 import { Progress } from "@/components/ui/progress"
 import Image from "next/image"
+import { useEffect } from "react"
 
 export default function LovedOneAssessment({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -16,11 +17,45 @@ export default function LovedOneAssessment({ params }: { params: { id: string } 
   const [progress, setProgress] = useState(0)
   const [answers, setAnswers] = useState<Record<string, number>>({})
 
-  // In a real app, this data would come from a database based on the ID
-  const lovedOneData = {
-    id: params.id,
-    name: "Child 1",
-    age: 6,
+  // Fetch loved one data from the database based on the ID
+  // For demonstration, we'll use useEffect and fetch from an API route
+
+  type LovedOne = {
+    id: string
+    name: string
+    age: number
+  }
+
+  const [lovedOneData, setLovedOneData] = useState<LovedOne | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchLovedOne = async () => {
+      setLoading(true)
+      try {
+        const res = await fetch(`/api/loved-ones/${params.id}`)
+        if (!res.ok) throw new Error("Failed to fetch loved one data")
+        const data = await res.json()
+        setLovedOneData(data)
+      } catch (error) {
+        setLovedOneData({
+          id: params.id,
+          name: "Your loved one",
+          age: 0,
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchLovedOne()
+  }, [params.id])
+
+  if (loading || !lovedOneData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span>Loading...</span>
+      </div>
+    )
   }
 
   // Define assessment sections based on DSM-5 domains for children
@@ -249,15 +284,6 @@ export default function LovedOneAssessment({ params }: { params: { id: string } 
               <CardDescription>{currentSectionData.description}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 pt-6">
-              <div className="flex justify-center mb-4">
-                <Image
-                  src="/placeholder.svg?height=150&width=150"
-                  alt="Assessment illustration"
-                  width={150}
-                  height={150}
-                  className="rounded-full bg-primary/10"
-                />
-              </div>
               {currentSectionData.questions.map((question, index) => (
                 <div key={question.id} className="space-y-4">
                   <div className="space-y-2">
