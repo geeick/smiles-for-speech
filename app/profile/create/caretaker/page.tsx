@@ -15,20 +15,53 @@ import { signIn } from "next-auth/react"
 export default function CaretakerProfile() {
   const router = useRouter()
 
- const [formData, setFormData] = useState({
-   email: "",
-   password: "",
-   name: "",
-   age: "",
-   sex: "",
-   lovedOnesCount: "1",
-   diagnosisStatus: "",
-   attendsSchool: "",
-   receivesServices: "",
- })
+const [formData, setFormData] = useState({
+  email: "",
+  password: "",
+  name: "",
+  age: "",
+  sex: "",
+  lovedOnesCount: "1",
+  location: "",
+})
+
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  // Auto-location logic
+const [locating, setLocating] = useState(false)
+
+const getLocation = async () => {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by your browser.")
+    return
+  }
+
+  setLocating(true)
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    const { latitude, longitude } = position.coords
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`)
+      const data = await res.json()
+      const location = data?.address?.city
+        ? `${data.address.city}, ${data.address.country}`
+        : data.display_name || "Location not found"
+      setFormData((prev) => ({ ...prev, location }))
+    } catch (err) {
+      alert("Failed to fetch location name.")
+    } finally {
+      setLocating(false)
+    }
+  }, () => {
+    alert("Unable to retrieve your location.")
+    setLocating(false)
+  })
+}
+
+const clearLocation = () => {
+  setFormData((prev) => ({ ...prev, location: "" }))
+}
+
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -226,65 +259,25 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="diagnosisStatus">Diagnosis status of your loved ones *</Label>
-                <RadioGroup
-                  value={formData.diagnosisStatus}
-                  onValueChange={(value) => handleChange("diagnosisStatus", value)}
-                  required
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="not-diagnosed" id="not-diagnosed" />
-                    <Label htmlFor="not-diagnosed">Not diagnosed</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="in-assessment" id="in-assessment" />
-                    <Label htmlFor="in-assessment">In assessment</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="diagnosed" id="diagnosed" />
-                    <Label htmlFor="diagnosed">Diagnosed</Label>
-                  </div>
-                </RadioGroup>
+            <div className="space-y-2">
+              <Label htmlFor="location">Location (optional)</Label>
+              <Input
+                id="location"
+                value={formData.location}
+                onChange={(e) => handleChange("location", e.target.value)}
+                placeholder="City, Country"
+                className="rounded-lg"
+              />
+              <div className="flex gap-2 pt-2">
+                <Button type="button" onClick={getLocation} disabled={locating}>
+                  {locating ? "Locating..." : "Use My Location"}
+                </Button>
+                <Button type="button" onClick={clearLocation} variant="outline">
+                  Remove Location
+                </Button>
               </div>
+            </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="attendsSchool">Do your loved ones attend school/daycare? *</Label>
-                <RadioGroup
-                  value={formData.attendsSchool}
-                  onValueChange={(value) => handleChange("attendsSchool", value)}
-                  required
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="school-yes" />
-                    <Label htmlFor="school-yes">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="school-no" />
-                    <Label htmlFor="school-no">No</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="receivesServices">Do they receive support services? *</Label>
-                <Select
-                  value={formData.receivesServices}
-                  onValueChange={(value) => handleChange("receivesServices", value)}
-                  required
-                >
-                  <SelectTrigger className="rounded-lg">
-                    <SelectValue placeholder="Select services" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">None</SelectItem>
-                    <SelectItem value="speech">Speech Therapy</SelectItem>
-                    <SelectItem value="ot">Occupational Therapy</SelectItem>
-                    <SelectItem value="iep">IEP/School Support</SelectItem>
-                    <SelectItem value="multiple">Multiple Services</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
             </CardContent>
             <CardFooter>
               <Button type="submit" className="w-full btn-primary">

@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Header } from "@/components/header"
 import { signIn } from "next-auth/react"
-
+import { useEffect } from "react"
 
 function SelfProfile() {
   const router = useRouter()
@@ -33,6 +33,29 @@ function SelfProfile() {
     challenges: [] as string[],
     location: "",
   })
+
+useEffect(() => {
+  if (formData.location === "") {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        )
+        const data = await res.json()
+        const city = data.address.city || data.address.town || data.address.village || ""
+        const country = data.address.country || ""
+        const locationString = `${city}, ${country}`
+        setFormData((prev) => ({ ...prev, location: locationString }))
+      } catch (err) {
+        console.error("Failed to reverse geocode:", err)
+      }
+    }, (error) => {
+      console.warn("Geolocation denied or unavailable:", error)
+    })
+  }
+}, [])
+
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -273,7 +296,36 @@ function SelfProfile() {
                   onChange={(e) => handleChange("location", e.target.value)}
                   className="rounded-lg"
                 />
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={async () => {
+                      navigator.geolocation.getCurrentPosition(async (position) => {
+                        const { latitude, longitude } = position.coords
+                        const res = await fetch(
+                          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+                        )
+                        const data = await res.json()
+                        const city = data.address.city || data.address.town || data.address.village || ""
+                        const country = data.address.country || ""
+                        const locationString = `${city}, ${country}`
+                        setFormData((prev) => ({ ...prev, location: locationString }))
+                      })
+                    }}
+                  >
+                    Use My Location
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => handleChange("location", "")}
+                  >
+                    Remove Location
+                  </Button>
+                </div>
               </div>
+
             </CardContent>
             <CardFooter>
               <Button 

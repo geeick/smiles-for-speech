@@ -76,10 +76,8 @@ model CaretakerProfile {
   user             User       @relation(fields: [userId], references: [id])
   userId           String     @unique
   consent          Boolean    @default(false)
+  location         String?
   lovedOnesCount   Int
-  diagnosisStatus  String
-  attendsSchool    Boolean
-  receivesServices String
   createdAt        DateTime   @default(now())
   lovedOnes        LovedOne[]
 }
