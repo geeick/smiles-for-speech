@@ -23,13 +23,11 @@ export default function CreateProfile() {
     }
   }
 
-  const handleProfileType = (type: "self" | "caretaker") => {
-    if (type === "self") {
-      router.push("/profile/create/self")
-    } else {
-      router.push("/profile/create/caretaker")
-    }
-  }
+const handleProfileType = (type: "self" | "caretaker") => {
+  const query = `?consent=${consent === "yes" ? "yes" : "no"}`
+  router.push(`/profile/create/${type}${query}`)
+}
+
 
   return (
     <div className="min-h-screen flex flex-col">

@@ -63,14 +63,6 @@
       "namedRegex": "^/profile/(?<nxtPuserId>[^/]+?)(?:/)?$"
     },
     {
-      "page": "/profile/[userId]/caretaker",
-      "regex": "^/profile/([^/]+?)/caretaker(?:/)?$",
-      "routeKeys": {
-        "nxtPuserId": "nxtPuserId"
-      },
-      "namedRegex": "^/profile/(?<nxtPuserId>[^/]+?)/caretaker(?:/)?$"
-    },
-    {
       "page": "/profile/[userId]/edit",
       "regex": "^/profile/([^/]+?)/edit(?:/)?$",
       "routeKeys": {

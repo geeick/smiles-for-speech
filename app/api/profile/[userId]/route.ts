@@ -15,24 +15,47 @@ export async function GET(
     // Fetch user and their selfProfile
     const user = await db.user.findUnique({
       where: { id: userId },
-      include: { selfProfile: true },
+      include: {
+      selfProfile: true,
+      caretakerProfile: true,
+    },
+
     });
 
-    if (!user || !user.selfProfile) {
+    if (!user || (!user.selfProfile && !user.caretakerProfile)) {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }
 
-    // Flatten the profile data for the frontend
-    const profile = {
-      id: user.id,
-      name: user.name,
-      age: user.selfProfile.age,
-      sex: user.selfProfile.sex,
-      diagnosis: user.selfProfile.diagnosis,
-      seekingDiagnosis: user.selfProfile.seekingDiagnosis,
-      challenges: user.selfProfile.challenges,
-      location: user.selfProfile.location,
-    };
+
+let profile
+let type
+
+if (user.selfProfile) {
+  type = "self"
+  profile = {
+    id: user.id,
+    name: user.name,
+    age: user.selfProfile.age,
+    sex: user.selfProfile.sex,
+    diagnosis: user.selfProfile.diagnosis,
+    seekingDiagnosis: user.selfProfile.seekingDiagnosis,
+    challenges: user.selfProfile.challenges,
+    location: user.selfProfile.location,
+  }
+} else {
+  type = "caretaker"
+  profile = {
+    id: user.id,
+    name: user.name,
+    lovedOnesCount: user.caretakerProfile.lovedOnesCount,
+    diagnosisStatus: user.caretakerProfile.diagnosisStatus,
+    attendsSchool: user.caretakerProfile.attendsSchool,
+    receivesServices: user.caretakerProfile.receivesServices,
+  }
+}
+
+return NextResponse.json({ type, ...profile }, { status: 200 });
+
 
     return NextResponse.json(profile, { status: 200 });
   } catch (error) {

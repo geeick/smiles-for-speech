@@ -25,7 +25,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/assessment/results": {
+    "/": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -38,8 +38,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/assessment/results",
-      "dataRoute": "/assessment/results.rsc",
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -73,7 +73,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/": {
+    "/profile/add-loved-one": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -86,8 +86,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/",
-      "dataRoute": "/index.rsc",
+      "srcRoute": "/profile/add-loved-one",
+      "dataRoute": "/profile/add-loved-one.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -121,54 +121,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/profile/login": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/profile/login",
-      "dataRoute": "/profile/login.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/profile/add-loved-one": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/profile/add-loved-one",
-      "dataRoute": "/profile/add-loved-one.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/profile/create/self": {
       "experimentalBypassFor": [
         {
@@ -193,7 +145,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources/age/adolescents": {
+    "/profile/login": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -206,32 +158,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/age/adolescents",
-      "dataRoute": "/resources/age/adolescents.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/resources/age/early-childhood": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/age/early-childhood",
-      "dataRoute": "/resources/age/early-childhood.rsc",
+      "srcRoute": "/profile/login",
+      "dataRoute": "/profile/login.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -265,30 +193,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources/age/adults": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/age/adults",
-      "dataRoute": "/resources/age/adults.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/resources/caregivers/education-materials": {
       "experimentalBypassFor": [
         {
@@ -304,30 +208,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/resources/caregivers/education-materials",
       "dataRoute": "/resources/caregivers/education-materials.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/resources/caregivers/education": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/caregivers/education",
-      "dataRoute": "/resources/caregivers/education.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -361,6 +241,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/resources/age/adults": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/age/adults",
+      "dataRoute": "/resources/age/adults.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/resources/caregivers/newly-diagnosed": {
       "experimentalBypassFor": [
         {
@@ -385,6 +289,54 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/resources/caregivers/education": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/caregivers/education",
+      "dataRoute": "/resources/caregivers/education.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/resources/age/adolescents": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/age/adolescents",
+      "dataRoute": "/resources/age/adolescents.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/resources/challenges/communication": {
       "experimentalBypassFor": [
         {
@@ -400,30 +352,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/resources/challenges/communication",
       "dataRoute": "/resources/challenges/communication.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/resources/challenges/executive-function": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/challenges/executive-function",
-      "dataRoute": "/resources/challenges/executive-function.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -481,7 +409,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources": {
+    "/resources/challenges/executive-function": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -494,8 +422,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/resources",
-      "dataRoute": "/resources.rsc",
+      "srcRoute": "/resources/challenges/executive-function",
+      "dataRoute": "/resources/challenges/executive-function.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -529,6 +457,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/resources": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources",
+      "dataRoute": "/resources.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/resources/challenges/social": {
       "experimentalBypassFor": [
         {
@@ -552,13 +504,61 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/assessment/results": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/assessment/results",
+      "dataRoute": "/assessment/results.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/resources/age/early-childhood": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/age/early-childhood",
+      "dataRoute": "/resources/age/early-childhood.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "6f5026d938a9c33c53bacb550c690c83",
-    "previewModeSigningKey": "13742657778f300ed03d04dc54f5bb57c2b510ef6a4f377658137111c920ed79",
-    "previewModeEncryptionKey": "dbe24bb2ffd857a64672423df8d06511651d6952e0c520cab5bde929864bd93f"
+    "previewModeId": "7211efc4464fd22d13f337f0859dd69e",
+    "previewModeSigningKey": "99e180c58ab2158e9d902c683620e660423ace0c6cc6a68fec41ab2e35ed9d1d",
+    "previewModeEncryptionKey": "bd3cecb30f973a2b2fb40a78f94dfbf449cd5275278c6f81e8a3b1eedd056984"
   }
 }

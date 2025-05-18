@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -10,18 +10,25 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Header } from "@/components/header"
+import { signIn } from "next-auth/react"
 
 export default function CaretakerProfile() {
   const router = useRouter()
-  const [formData, setFormData] = useState({
-    name: "",
-    age: "",
-    sex: "",
-    lovedOnesCount: "1",
-    diagnosisStatus: "",
-    attendsSchool: "",
-    receivesServices: "",
-  })
+
+ const [formData, setFormData] = useState({
+   email: "",
+   password: "",
+   name: "",
+   age: "",
+   sex: "",
+   lovedOnesCount: "1",
+   diagnosisStatus: "",
+   attendsSchool: "",
+   receivesServices: "",
+ })
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -29,18 +36,27 @@ export default function CaretakerProfile() {
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
+  setIsLoading(true)
+  setError(null)
 
-  const res = await fetch("/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      type: "caretaker",
-      consent,
-      credentials: {
-        email: formData.email,
-        password: formData.password,
-      },
-      profile: {
+  // Get consent from localStorage
+  let consentValue = "no"
+  if (typeof window !== "undefined") {
+    const storedConsent = localStorage.getItem("profile_consent")
+    consentValue = storedConsent === "yes" ? "yes" : "no"
+  }
+
+  // Simple base64 "encryption" as a placeholder
+  const encrypt = (str: string) => {
+    if (typeof window !== "undefined") {
+      return window.btoa(unescape(encodeURIComponent(str)))
+    }
+    return str
+  }
+
+  // Prepare profile data, encrypt if no consent
+  const profileData = consentValue === "yes"
+    ? {
         name: formData.name,
         age: parseInt(formData.age, 10),
         sex: formData.sex,
@@ -48,17 +64,62 @@ const handleSubmit = async (e: React.FormEvent) => {
         diagnosisStatus: formData.diagnosisStatus,
         attendsSchool: formData.attendsSchool === "yes",
         receivesServices: formData.receivesServices,
-      },
-    }),
-  })
+      }
+    : {
+        name: encrypt(formData.name),
+        age: encrypt(formData.age),
+        sex: encrypt(formData.sex),
+        lovedOnesCount: encrypt(formData.lovedOnesCount),
+        diagnosisStatus: encrypt(formData.diagnosisStatus),
+        attendsSchool: encrypt(formData.attendsSchool),
+        receivesServices: encrypt(formData.receivesServices),
+      }
 
-  if (res.ok) {
-    router.push("/profile/dashboard")
-  } else {
-    const err = await res.json()
-    alert("Failed: " + err.message)
+  try {
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "caretaker",
+        consent: consentValue === "yes",
+        credentials: {
+          email: consentValue === "yes" ? formData.email : encrypt(formData.email),
+          password: consentValue === "yes" ? formData.password : encrypt(formData.password),
+        },
+        profile: profileData,
+      }),
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+      const signInRes = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      })
+
+      if (signInRes?.ok && data?.userId) {
+        router.push(`/profile/${data.userId}`)
+        router.refresh()
+      } else {
+        setError("Sign-in failed. Please try logging in manually.")
+        router.push("/login")
+      }
+    } else {
+      if (data?.error?.toLowerCase().includes("email")) {
+        setError("This email address is already in use. Please use a different email or log in.")
+      } else {
+        setError(data?.error || "Registration failed. Please try again.")
+      }
+    }
+  } catch (err) {
+    setError("An unexpected error occurred. Please try again.")
+  } finally {
+    setIsLoading(false)
   }
 }
+
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -85,6 +146,34 @@ const handleSubmit = async (e: React.FormEvent) => {
                   placeholder="Enter your full name"
                 />
               </div>
+
+              <div className="space-y-2">
+               <Label htmlFor="email">Email Address *</Label>
+               <Input
+                 id="email"
+                 type="email"
+                 required
+                 value={formData.email}
+                 onChange={(e) => handleChange("email", e.target.value)}
+                 className="rounded-lg"
+                 placeholder="your.email@example.com"
+               />
+             </div>
+             
+             <div className="space-y-2">
+               <Label htmlFor="password">Password *</Label>
+               <Input
+                 id="password"
+                 type="password"
+                 required
+                 value={formData.password}
+                 onChange={(e) => handleChange("password", e.target.value)}
+                 className="rounded-lg"
+                 placeholder="Create a secure password"
+                 minLength={8}
+               />
+               <p className="text-xs text-muted-foreground">Password must be at least 8 characters long</p>
+             </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
